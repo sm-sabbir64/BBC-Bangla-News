@@ -27,19 +27,23 @@
 <body>
     <header>
         <div class="bg-red-700 py-4">
-            <div class="max-w-6xl mx-auto px-5 ">
+            <div class="max-w-[1300px] mx-auto px-5 ">
                 <img class="invert" src="./assets/logo.svg" alt="">
             </div>
         </div>
 
         <nav class="border-b border-gray-300 p-2">
-            <ul id="categoryContainer" class="flex gap-10 max-w-6xl mx-auto px-5 text-lg ">
+            <ul id="categoryContainer" class="flex gap-10 max-w-[1300px] mx-auto px-5 text-lg ">
             </ul>
         </nav>
     </header>
-    <main class="max-w-6xl mx-auto px-5 ">
-        <div class="grid grid-cols-4 gap-6" id="newsContainer">
-
+    <main class="max-w-[1300px] mx-auto px-5 grid grid-cols-5 gap-5">
+        <div class="grid grid-cols-4 gap-4 col-span-4" id="newsContainer"></div>
+        <div class="col-span-1 border border-gray-300 rounded-lg overflow-hidden mt-5">
+            <div class="bg-red-700 text-white p-3 rounded">
+                <h1>Bookmark</h1>
+            </div>  
+            <div id="bookmarkContainer" ></div>
         </div>
     </main>
 

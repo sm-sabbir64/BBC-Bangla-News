@@ -1,6 +1,46 @@
 //promise -->pending, resolve(success), reject(error)
-
 const categoryContainer = document.getElementById("categoryContainer");
+
+const newsContainer = document.getElementById("newsContainer");
+
+const bookmarkContainer = document.getElementById("bookmarkContainer");
+
+let bookmarks = [];
+
+newsContainer.addEventListener("click", (e) => {
+  // console.log(e.target);
+  // console.log(e.target.innerText);
+  if (e.target.innerText === "Bookmark") {
+    // console.log("bookmark button clicked");
+    // console.log(e.target.parentNode.children[0].innerText);
+    handleBookmarks(e);
+  }
+});
+
+const handleBookmarks = (e) => {
+  // console.log(e);
+
+  const title = e.target.parentNode.children[0].innerText;
+  const id = e.target.parentNode.id;
+
+  bookmarks.push({
+    title: title,
+    id: id,
+  });
+  showBookmarks(bookmarks);
+};
+
+const showBookmarks = (bookmarks) => {
+  bookmarkContainer.innerHTML = "";
+  bookmarks.forEach((bookmark) => {
+    bookmarkContainer.innerHTML += `
+    <div class="border my-2 p-1">
+      <h1>${bookmark.title}</h1>
+    </div>
+
+    `;
+  });
+};
 
 const loadCategory = () => {
   fetch("https://news-api-fs.vercel.app/api/categories")
@@ -52,19 +92,19 @@ const loadNewsCategory = (categoryId) => {
 };
 
 const showNewsByCategory = (article) => {
-  console.log(article);
+  // console.log(article);
   newsContainer.innerHTML = "";
   article.forEach((article) => {
     newsContainer.innerHTML += `
- <div class="border border-gray-300 rounded-lg mt-5">
+ <div class="border border-gray-300 rounded-lg mt-5 ">
     <div>
-        <img class="max-w-fit" src="${article.image.srcset[0].url}"></img>
+        <img class="w-full rounded" src="${article.image.srcset[0].url}"></img>
     </div>
 
     <div class="p-2">
     <h1 class="font-extrabold">${article.title}</h1>
     <p class="text-medium mt-2">${article.time}</p>
-    <button class="btn">Bookmarks</button>
+    <button class="btn mt-2">Bookmark</button>
     </div>
     
   </div>
