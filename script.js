@@ -42,32 +42,39 @@ const showCategory = (categories) => {
 const loadNewsCategory = (categoryId) => {
   // console.log(categoryId);
   fetch(`https://news-api-fs.vercel.app/api/categories/${categoryId}`)
-  .then((res => res.json()))
-  .then(data => {
-    showNewsByCategory(data.articles)
-    
-  })
-  .catch(err =>{
-    console.log(err);
-    
-  })
+    .then((res) => res.json())
+    .then((data) => {
+      showNewsByCategory(data.articles);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
-const showNewsByCategory=(article)=>{
+const showNewsByCategory = (article) => {
   console.log(article);
-  newsContainer.innerHTML = ""
-  article.forEach(article => {
-    newsContainer.innerHTML +=`
+  newsContainer.innerHTML = "";
+  article.forEach((article) => {
+    newsContainer.innerHTML += `
+ <div class="border border-gray-300 rounded-lg mt-5">
     <div>
-    <img src="${article.image.srcset[0].url}"></img>
-    <h1>${article.title}</h1>
+        <img class="max-w-fit" src="${article.image.srcset[0].url}"></img>
     </div>
-    `
-  })
-  
-}
+
+    <div class="p-2">
+    <h1 class="font-extrabold">${article.title}</h1>
+    <p class="text-medium mt-2">${article.time}</p>
+    <button class="btn">Bookmarks</button>
+    </div>
+    
+  </div>
+   
+    `;
+  });
+};
 
 loadCategory();
+loadNewsCategory("main");
 
 // Second Category te function call kora jai
 // try {
