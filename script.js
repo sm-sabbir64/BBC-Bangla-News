@@ -73,7 +73,15 @@ const handleViewDetails = (e) =>{
   })
 }
 
+const showDetailNews = (article) => {
+    newsDetailsModal.showModal()
 
+    modalContainer.innerHTML = `
+    <h1 class="text-[20px]">${article.title}</h1>
+    <img src="${article.images[0].url}"/>
+    <p>${article.content.join("")}</p>
+    `
+  }
 
 const showBookmarks = (bookmarks) => {
   bookmarkContainer.innerHTML = "";
