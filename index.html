@@ -38,12 +38,17 @@
         </nav>
     </header>
     <main class="max-w-[1300px] mx-auto px-5 grid grid-cols-5 gap-5">
-        <div class="grid grid-cols-4 gap-4 col-span-4" id="newsContainer"></div>
+
+        <div id="newsContainer" class="grid grid-cols-4 gap-4 col-span-4"></div>
+        
         <div class="col-span-1 border border-gray-300 rounded-lg overflow-hidden mt-5">
-            <div class="bg-red-700 text-white p-3 rounded">
+            <div class="bg-red-700 text-white p-3 rounded flex justify-around">
                 <h1>Bookmark</h1>
+                <p id="bookmarkCount">0</p>
             </div>  
-            <div id="bookmarkContainer" ></div>
+            <div id="bookmarkContainer" >
+
+            </div>
         </div>
     </main>
 

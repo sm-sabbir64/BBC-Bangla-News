@@ -5,6 +5,8 @@ const newsContainer = document.getElementById("newsContainer");
 
 const bookmarkContainer = document.getElementById("bookmarkContainer");
 
+const bookmarkCount = document.getElementById("bookmarkCount");
+
 let bookmarks = [];
 
 newsContainer.addEventListener("click", (e) => {
@@ -18,28 +20,46 @@ newsContainer.addEventListener("click", (e) => {
 });
 
 const handleBookmarks = (e) => {
-  // console.log(e);
+  // console.log(e.target);
 
   const title = e.target.parentNode.children[0].innerText;
-  const id = e.target.parentNode.id;
+  const id = e.target.parentNode.id
+  // console.log(id);
+  
 
   bookmarks.push({
     title: title,
     id: id,
   });
+  // console.log(bookmarks);
   showBookmarks(bookmarks);
+   
 };
 
 const showBookmarks = (bookmarks) => {
   bookmarkContainer.innerHTML = "";
   bookmarks.forEach((bookmark) => {
+    // console.log(bookmark);
+
     bookmarkContainer.innerHTML += `
     <div class="border my-2 p-1">
       <h1>${bookmark.title}</h1>
+      <button onclick="handleDeleteBookmark('${bookmark.id}')" class="btn text-[12px]">Delete</button>
     </div>
-
     `;
   });
+   bookmarkCount.innerText = bookmarks.length
+};
+
+const handleDeleteBookmark = (bookmarkId) => {
+  // console.log(bookmarkId, "id");
+
+  const filteredBookmarks = bookmarks.filter(
+    (bookmark) => bookmark.id !== bookmarkId
+  );
+  // console.log(filterBookmarks);
+  bookmarks = filteredBookmarks;
+  showBookmarks(bookmarks);
 };
 
 const loadCategory = () => {
@@ -101,12 +121,12 @@ const showNewsByCategory = (article) => {
         <img class="w-full rounded" src="${article.image.srcset[0].url}"></img>
     </div>
 
-    <div class="p-2">
+    <div id="${article.id}" class="p-2">
     <h1 class="font-extrabold">${article.title}</h1>
     <p class="text-medium mt-2">${article.time}</p>
     <button class="btn mt-2">Bookmark</button>
     </div>
-    
+
   </div>
    
     `;
