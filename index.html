@@ -39,18 +39,33 @@
     </header>
     <main class="max-w-[1300px] mx-auto px-5 grid grid-cols-5 gap-5">
 
-        <div id="newsContainer" class="grid grid-cols-4 gap-4 col-span-4"></div>
-        
+        <div id="newsContainer" class="grid grid-cols-4 gap-4 col-span-4">
+
+        </div>
+
         <div class="col-span-1 border border-gray-300 rounded-lg overflow-hidden mt-5">
             <div class="bg-red-700 text-white p-3 rounded flex justify-around">
                 <h1>Bookmark</h1>
                 <p id="bookmarkCount">0</p>
-            </div>  
-            <div id="bookmarkContainer" >
+            </div>
+            <div id="bookmarkContainer">
 
             </div>
         </div>
     </main>
+
+    <!-- Open the modal using ID.showModal() method -->
+<dialog id="news-details-modal" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box">
+    <div id="modalContainer"></div>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
 
 
     <script src="./script.js"></script>

@@ -7,7 +7,29 @@ const bookmarkContainer = document.getElementById("bookmarkContainer");
 
 const bookmarkCount = document.getElementById("bookmarkCount");
 
+const modalContainer = document.getElementById("modalContainer");
+
+const newsDetailsModal = document.getElementById("news-details-modal");
+
 let bookmarks = [];
+
+const showLoading = () => {
+  newsContainer.innerHTML = `
+   <div class="bg-green-500 p-3 mt-2">Loading....</div>
+  `;
+};
+
+const showError = () => {
+  newsContainer.innerHTML = `
+  <div class="bg-red-600 p-3 mt-2">Something went wrong</div>
+  `;
+};
+
+const showEmptyMassage = () => {
+  newsContainer.innerHTML = `
+    <div class="bg-orange-500 p-3 mt-2">No news found for this categories</div>
+  `;
+};
 
 newsContainer.addEventListener("click", (e) => {
   // console.log(e.target);
@@ -17,15 +39,17 @@ newsContainer.addEventListener("click", (e) => {
     // console.log(e.target.parentNode.children[0].innerText);
     handleBookmarks(e);
   }
+  if(e.target.innerText === "View Details"){
+    handleViewDetails(e)
+  }
 });
 
 const handleBookmarks = (e) => {
   // console.log(e.target);
 
   const title = e.target.parentNode.children[0].innerText;
-  const id = e.target.parentNode.id
+  const id = e.target.parentNode.id;
   // console.log(id);
-  
 
   bookmarks.push({
     title: title,
@@ -33,14 +57,28 @@ const handleBookmarks = (e) => {
   });
   // console.log(bookmarks);
   showBookmarks(bookmarks);
-   
 };
+
+const handleViewDetails = (e) =>{
+  const id = e.target.parentNode.id;
+  // newsDetailsModal.showModal()
+  fetch(`https://news-api-fs.vercel.app/api/news/${id}`)
+  .then(res => res.json())
+  .then(data => {
+    console.log(data);
+    showDetailNews(data.article)
+  })
+  .catch(err=>{
+    console.log(err);
+  })
+}
+
+
 
 const showBookmarks = (bookmarks) => {
   bookmarkContainer.innerHTML = "";
   bookmarks.forEach((bookmark) => {
     // console.log(bookmark);
-
     bookmarkContainer.innerHTML += `
     <div class="border my-2 p-1">
       <h1>${bookmark.title}</h1>
@@ -48,7 +86,7 @@ const showBookmarks = (bookmarks) => {
     </div>
     `;
   });
-   bookmarkCount.innerText = bookmarks.length
+  bookmarkCount.innerText = bookmarks.length;
 };
 
 const handleDeleteBookmark = (bookmarkId) => {
@@ -93,6 +131,7 @@ const showCategory = (categories) => {
     });
     if (e.target.localName === "li") {
       // console.log(e.target);
+      showLoading();
       e.target.classList.add("border-b-4");
       loadNewsCategory(e.target.id);
     }
@@ -107,16 +146,21 @@ const loadNewsCategory = (categoryId) => {
       showNewsByCategory(data.articles);
     })
     .catch((err) => {
-      console.log(err);
+      showError();
+      alert("Something went wrong");
     });
 };
 
 const showNewsByCategory = (article) => {
   // console.log(article);
+  if (article.length === 0) {
+    showEmptyMassage();
+    return;
+  }
   newsContainer.innerHTML = "";
   article.forEach((article) => {
     newsContainer.innerHTML += `
- <div class="border border-gray-300 rounded-lg mt-5 ">
+ <div class="border border-gray-300 rounded-lg mt-5">
     <div>
         <img class="w-full rounded" src="${article.image.srcset[0].url}"></img>
     </div>
@@ -124,10 +168,11 @@ const showNewsByCategory = (article) => {
     <div id="${article.id}" class="p-2">
     <h1 class="font-extrabold">${article.title}</h1>
     <p class="text-medium mt-2">${article.time}</p>
-    <button class="btn mt-2">Bookmark</button>
-    </div>
-
+    <button class="btn p-2 text-[12px] mt-2">Bookmark</button>
+    <button class="btn p-2 text-[12px] mt-2 ml-11">View Details</button>
   </div>
+
+</div>
    
     `;
   });
